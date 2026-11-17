@@ -91,6 +91,14 @@
                     let seatBonus = seatLevel * 40;
                     let parkingMoney = parkingLots * 60;
                     let income = ticketMoney + bonus + seatBonus + parkingMoney;
+                    let result = "";
+                    if (Math.random() < rating / 100){
+                        income = income + 300;
+                        result = "You WON!";
+                    } else {
+                        income = income + 50;
+                        result = "You LOST!";
+                    }
 
                     if (Math.random() < rating / 100){
                         income = income + 300;
@@ -104,6 +112,7 @@
                     document.getElementById("money").textContent = money;
                     document.getElementById("attendance").textContent = attendance;
                     document.getElementById("profit").textContent = profit;
+                    document.getElementById("message").textContent = result + "Profit: $" + profit;
                     }
                
                   function hirePlayer() {

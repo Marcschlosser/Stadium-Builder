@@ -46,7 +46,7 @@
             <p>Your parking: <span id="lotsField"></span></p>
             <p>Your seats: <span id="seatsField"></span></p>
             <p>Message: <span id="message"></span></p>
-
+            <p>Hot dog stand pays for itelf in <span id="standPayback"></span></p>
 
              
             <button onclick="buyStand()">Buy Hot Dog Stand ($200)</button>
@@ -56,6 +56,7 @@
             <button onclick="buySeatUpgrade()">Buy Seat Upgrade ($400)</button>
             <button onclick="changePrice(1)">Raise ticket Price</button>
             <button onclick="changePrice(-1)">Lower Ticket Price</button>
+            <button id="autoBtn" onclick="toggleAutoBuy()">Auto-buy hot dog stands: OFF</button>
 
 
             <script>
@@ -65,7 +66,8 @@
                 let hireCost = 300;
                 let parkingLots = 0;
                 let seatLevel = 0;
-                let ticketPrice =5;   
+                let ticketPrice =5;
+                let autoBuy = false;   
                 
 
              function buyStand() {
@@ -108,6 +110,9 @@
                     let costs = 100 + stands * 5 + parkingLots * 10;
                     let profit = income - costs;
                     money = money + profit;
+                    if (autoBuy && money >= 200){
+                        buyStand();
+                    }
 
                     document.getElementById("money").textContent = money;
                     document.getElementById("attendance").textContent = attendance;
@@ -164,8 +169,19 @@
                     }
                     document.getElementById("price").textContent = ticketPrice;
                 }
+                function toggleAutoBuy() {
+                    autoBuy = !autoBuy;
+                 if (autoBuy) {
+                 document.getElementById("autoBtn").textContent = "Auto-buy hot dog stand: ON";
+                } else {
+                    document.getElementById("autoBtn").textContent = "Auto-buy hot dog stand: OFF";
+                }
+            }
 
-       
+
+
+                let standPayback = 200 / (25 - 5);
+                document.getElementById("standPayback").textContent = standPayback;
                 
             </script>
         

@@ -119,7 +119,7 @@
             }
             #first {
                 right: -7px;
-                top: -7px
+                top: -7px;
             }
             #third {
                 left: -7px;
@@ -138,6 +138,55 @@
                 border-radius: 50%;
                 background-color: #a8652a;
                 transform: translate(-50%, -50%);
+            }
+            #concessions {
+                position: absolute;
+                left: 12px;
+                top: 12px;
+                width: 120px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                
+                
+            
+            }
+            .cart {
+                width: 40px;
+                height: 40px;
+                background-color: #d84315;
+                border: 2px solid white;
+                border-radius: 6px;
+                text-align: center;
+                line-height: 40px;
+                font-size: 22px;
+            }
+            #parking {
+                position: absolute;
+                right: 12px;
+                bottom: 12px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .lot {
+                width: 60px;
+                height: 40px;
+                background-color: grey;
+
+            }
+            #seats {
+                position: absolute;
+                left: 12px;
+                bottom: 12px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .seat {
+                width: 60px;
+                height: 40px;
+                background-color: darkblue;
             }
         </style>
          </head>
@@ -186,7 +235,11 @@
                  <div class="base" id="home"></div>
                  <div id="mound"></div>
 
+
                  </div>
+                 <div id="concessions"></div>
+                 <div id="parking"></div>
+                 <div id="seats"></div>
                 </div>
                 
             </div>
@@ -206,6 +259,11 @@
              if (money >= 200) {
              money = money - 200;
              stands = stands + 1;
+
+             let cart = document.createElement("div");
+             cart.className = "cart";
+             cart.textContent = "🌭";
+             document.getElementById("concessions").appendChild(cart);
 
             document.getElementById("money").textContent = money;
            document.getElementById("stands").textContent = stands;
@@ -242,11 +300,7 @@
                         result = "You LOST!";
                     }
 
-                    if (Math.random() < rating / 100){
-                        income = income + 300;
-                    }  else {
-                        income = income + 50;
-                    }
+                   
                     let costs = 100 + stands * 5 + parkingLots * 10;
                     let profit = income - costs;
                     money = money + profit;
@@ -279,6 +333,10 @@
                     if (money >= 500){
                        money = money - 500;
                        parkingLots = parkingLots + 1;
+                       let lot = document.createElement("div");
+                       lot.className = "lot";
+                       lot.textContent = "🅿️";
+                       document.getElementById("parking").appendChild(lot);
                     document.getElementById("money").textContent = money;
                     document.getElementById("parkingLots").textContent = parkingLots;
                     document.getElementById("lotsField").textContent = "🅿️".repeat(parkingLots);
@@ -293,6 +351,10 @@
                     if (money >= 400 && seatLevel < 5) {
                         money = money - 400;
                         seatLevel = seatLevel + 1;
+                        let seat = document.createElement("div");
+                        seat.className = "seat";
+                        seat.textContent = "💺";
+                        document.getElementById("seats").appendChild(seat);
                         document.getElementById("money").textContent = money;
                         document.getElementById("seatLevel").textContent = seatLevel;
                         document.getElementById("seatsField").textContent = "💺".repeat(seatLevel);

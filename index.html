@@ -30,10 +30,123 @@
             button:hover {
                 background-color: #f9a825;
             }
+            #layout {
+                display: flex;
+                gap: 24px;
+                align-items: flex-start;
+            }
+            #panel {
+                flex: 1;
+            }
+            #scene {
+                flex: 1; 
+                min-height: 720px;
+                background-color: #66bb6a;
+                border: 4px solid white;
+                border-radius: 12px;
+                position: relative;
+                overflow: hidden;
+            }
+            #grandstands {
+                position: absolute;
+                left: 50%;
+                top: calc(50% + 90px);
+                width: 860px;
+                height: 860px;
+                border-radius: 50%;
+                border: 6px solid #455a64;
+                background: repeating-radial-gradient(circle at center, #90a4ae 0px, #90a4ae 0px, #78909c 8px, #78909c 16px);
+                clip-path: polygon(50% 50%, 0 0, 100% 0);
+                transform: translate(-50%, -50%);
+            }
+              #outfield {
+                position: absolute;
+                left: 50%;
+                top: calc(50% + 90px);
+                width: 680px;
+                height: 680px;
+                border-radius: 50%;
+                border: 12px solid #a8652a;
+                background: repeating-radial-gradient(circle at center, #4caf50 0px, #4caf50 30px, #43a047 30px, #43a047 60px);
+                clip-path: polygon(50% 50%, 0 0, 100% 0);
+                transform: translate(-50%, -50%);
+            }
+            .foulline {
+                position: absolute;
+                width: 3px;
+                height: 340px;
+                background-color: white;
+                left: calc(50% - 1.5px);
+                top: calc(50% - 250px);
+                transform-origin: bottom center;
+               }
+               #foulLeft {
+                transform: rotate(-45deg);
+               }
+               #foulRight {
+                transform: rotate(45deg);
+               }
+                
+            
+            #diamond {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 120px;
+                height: 120px;
+                background-color: #c68642;
+                border: 4px solid white;
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+            #infieldGrass {
+                position: absolute;
+                left: 14px;
+                top: 14px;
+                right: 14px;
+                bottom: 14px;
+                background-color: #3d9a42;
+
+            }
+            .base {
+                position: absolute;
+                width: 14px;
+                height: 14px;
+                background-color: white;
+            }
+            #second {
+                left: -7px;
+                top: -7px;
+            }
+            #first {
+                right: -7px;
+                top: -7px
+            }
+            #third {
+                left: -7px;
+                bottom: -7px;
+            }
+            #home {
+                right: -7px;
+                bottom: -7px;
+            }
+            #mound {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: #a8652a;
+                transform: translate(-50%, -50%);
+            }
         </style>
          </head>
          <body>
             <h1>Stadium Builder</h1>
+
+            <div id="layout">
+                <div id="panel">
+             
             <p>Money: $<span id="money">1000</span></p>
             <p>Hot dog stands: <span id="stands">0</span></p>
             <p> Team rating: <span id="rating">50</span></p>
@@ -46,7 +159,7 @@
             <p>Your parking: <span id="lotsField"></span></p>
             <p>Your seats: <span id="seatsField"></span></p>
             <p>Message: <span id="message"></span></p>
-            <p>Hot dog stand pays for itelf in <span id="standPayback"></span></p>
+            <p>Hot dog stand pays for itself in <span id="standPayback"></span> games </p>
 
              
             <button onclick="buyStand()">Buy Hot Dog Stand ($200)</button>
@@ -57,7 +170,26 @@
             <button onclick="changePrice(1)">Raise ticket Price</button>
             <button onclick="changePrice(-1)">Lower Ticket Price</button>
             <button id="autoBtn" onclick="toggleAutoBuy()">Auto-buy hot dog stands: OFF</button>
+       </div>
+            
 
+            <div id="scene">
+                <div id="grandstands"></div>
+                 <div id="outfield"></div>
+                 <div class="foulline" id="foulLeft"></div>
+                 <div class="foulline" id="foulRight"></div>
+                <div id="diamond">
+                    <div id="infieldGrass"></div>
+                 <div class="base" id="second"></div>
+                 <div class="base" id="first"></div>
+                 <div class="base" id="third"></div>
+                 <div class="base" id="home"></div>
+                 <div id="mound"></div>
+
+                 </div>
+                </div>
+                
+            </div>
 
             <script>
                 let money = 1000;
@@ -87,6 +219,14 @@
                     
                 
                   function playGame() {
+                    if (Math.random() < 0.1) {
+                        money = money - 100;
+                        document.getElementById("money").textContent = money;
+                        document.getElementById("attendance").textContent = 0;
+                        document.getElementById("profit").textContent = -100;
+                        document.getElementById("message").textContent = "Rainout! No income today. You still paid $100.";
+                        return;
+                    }
                     let attendance = Math.max(0, rating *2 - ticketPrice * 10);
                     let ticketMoney = attendance * ticketPrice;
                     let bonus = stands *25; 
@@ -110,7 +250,7 @@
                     let costs = 100 + stands * 5 + parkingLots * 10;
                     let profit = income - costs;
                     money = money + profit;
-                    if (autoBuy && money >= 200){
+                    if (autoBuy && money >= 300){
                         buyStand();
                     }
 
